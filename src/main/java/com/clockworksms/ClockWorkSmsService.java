@@ -1,5 +1,11 @@
 package com.clockworksms;
 
+import com.clockworksms.xml.*;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,22 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
-import com.clockworksms.xml.BalanceRequest;
-import com.clockworksms.xml.BalanceResponse;
-import com.clockworksms.xml.CreditRequest;
-import com.clockworksms.xml.CreditResponse;
-import com.clockworksms.xml.MessageRequest;
-import com.clockworksms.xml.MessageResponse;
-import com.clockworksms.xml.SmsResponse;
-import com.clockworksms.xml.XmlRequest;
-import com.clockworksms.xml.XmlResponse;
-import com.clockworksms.xml.xmlSMS;
 
 
 /**
@@ -59,6 +49,7 @@ public class ClockWorkSmsService {
 
 	private static final String SMS_URL = "api.clockworksms.com/xml/send";
 	private static final String CREDIT_URL = "api.clockworksms.com/xml/credit";
+	private static final String BALANCE_URL = "api.clockworksms.com/xml/balance";
 
 	private String apiKey;
 	private String from;
@@ -335,6 +326,8 @@ public class ClockWorkSmsService {
 		// determine service endpoint based on type of class/request passed in
 		if( request.getClass() == MessageRequest.class) {
 			url += ClockWorkSmsService.SMS_URL;
+		} else if (request.getClass() == BalanceRequest.class) {
+			url += ClockWorkSmsService.BALANCE_URL;
 		}
 		else {
 			url += ClockWorkSmsService.CREDIT_URL;

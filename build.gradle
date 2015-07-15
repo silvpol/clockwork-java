@@ -1,0 +1,54 @@
+buildscript {
+
+	repositories {
+		maven {
+			url 'http://artifactory.daana.io/artifactory/plugins-release'
+			credentials {
+				username = "${artifactory_user}"
+				password = "${artifactory_password}"
+			}
+		}
+	}
+
+	dependencies {
+		//Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+		classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
+	}
+}
+
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply from: 'artifactory.gradle'
+apply from: 'findbugs.gradle'
+
+
+version = '1.2.0'
+
+repositories {
+
+	maven {
+		url 'http://artifactory.daana.io/artifactory/libs-release'
+		credentials {
+			username = "${artifactory_user}"
+			password = "${artifactory_password}"
+		}
+	}
+}
+
+
+dependencies {
+
+	testCompile 'junit:junit:4.8.1'
+}
+
+test {
+
+	systemProperties 'com.clockworksms.test.apiKey': api_key
+}
+
+task wrapper(type: Wrapper) {
+
+	gradleVersion = '2.2.1'
+	distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
+}

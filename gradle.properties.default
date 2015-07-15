@@ -1,0 +1,5 @@
+api_key=
+
+artifactory_user=
+artifactory_password=
+artifactory_contextUrl=http://artifactory.daana.io/artifactory

@@ -1,0 +1,19 @@
+apply plugin: 'findbugs'
+
+findbugs {
+
+	toolVersion = "2.0.3"
+	ignoreFailures = false
+	effort = "max"
+	reportLevel = "high"
+}
+
+tasks.withType(FindBugs) {
+
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+
+	excludeFilter = file('FindBugsExcludeFilter.xml')
+}
